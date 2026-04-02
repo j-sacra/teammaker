@@ -258,8 +258,7 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
 
 <script>
 const TEAM_COLORS=[
-  '#e53935','#1e88e5','#43a047','#fb8c00','#8e24aa',
-  '#fdd835','#00acc1','#e91e63','#26c6da','#ef6c00'
+  '#ffffff','#000000'
 ];
 const AVATAR_COLORS=['#e53935','#1e88e5','#43a047','#fb8c00','#8e24aa','#00acc1','#e91e63','#546e7a'];
 
@@ -302,7 +301,7 @@ let S={
   exclusions:[],
   numTeams:2,
   teamNames:['Equipa A','Equipa B'],
-  teamColors:['#e53935','#1e88e5'],
+  teamColors:['#ffffff','#000000'],
   history:[]
 };
 
@@ -716,7 +715,7 @@ function aColor(name){
 }
 function inits(name){return name.split(' ').map(w=>w[0]||'').slice(0,2).join('').toUpperCase();}
 function esc(s){if(!s)return'';return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-const COLOR_NAMES={'#e53935':'Vermelho','#1e88e5':'Azul','#43a047':'Verde','#fb8c00':'Laranja','#8e24aa':'Roxo','#fdd835':'Amarelo','#00acc1':'Ciano','#e91e63':'Rosa','#26c6da':'Azul claro','#ef6c00':'Laranja escuro'};
+const COLOR_NAMES={'#ffffff':'Branco','#000000':'Preto'};
 function colorName(hex){return COLOR_NAMES[hex]||hex;}
 
 // ---- GROUPS ----
