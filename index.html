@@ -9,14 +9,15 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
   --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;
-  --text:#e6edf3;--muted:#7d8590;--green:#3fb950;--green-dim:#1a4428;
+  --text:#e6edf3;--muted:#9198a1;--green:#3fb950;--green-dim:#1a4428;
   --gold:#d29922;--red:#f85149;--blue:#58a6ff;--radius:10px
 }
+html{scroll-padding-top:110px}
 body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;padding-bottom:80px}
 .container{max-width:540px;margin:0 auto}
 
 /* HEADER */
-.header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50}
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50}
 .header-icon{font-size:24px}
 .header-title{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;letter-spacing:0.5px}
 .header-title span{color:var(--green)}
@@ -24,9 +25,11 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 .share-btn:active{opacity:0.7}
 
 /* TABS */
-.tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:57px;z-index:40}
-.tab{flex:1;padding:12px 4px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:600;font-family:'Barlow',sans-serif;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;letter-spacing:.3px}
+.tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:49px;z-index:40;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabs[role=tablist]{gap:0}
+.tab{flex:1;padding:10px 4px;border:none;background:transparent;color:var(--muted);font-size:13px;font-weight:600;font-family:'Barlow',sans-serif;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;letter-spacing:.3px;white-space:nowrap;min-width:0}
 .tab.active{color:var(--green);border-bottom-color:var(--green)}
+.tab:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
 
 /* SECTIONS */
 .section{display:none;padding:16px}
@@ -58,40 +61,43 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
 .player-item:last-child{margin-bottom:0}
 .player-header{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;user-select:none}
 .player-header:hover{background:rgba(255,255,255,.03)}
+.player-header:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
 .avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;flex-shrink:0}
-.player-name-text{flex:1;font-size:15px;font-weight:500}
+.player-name-text{flex:1;font-size:15px;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .player-avg{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:600;color:var(--gold);white-space:nowrap}
 .mini-stars{color:var(--gold);font-size:13px;letter-spacing:-1px}
 .mini-stars .empty{color:var(--border)}
 .player-chev{color:var(--muted);font-size:11px;transition:transform .15s;margin-left:2px}
 .player-item.open .player-chev{transform:rotate(180deg)}
-.remove-btn{color:var(--muted);font-size:16px;background:none;border:none;cursor:pointer;padding:2px 6px}
+.remove-btn{color:var(--muted);font-size:16px;background:none;border:none;cursor:pointer;padding:12px;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
 .remove-btn:active{color:var(--red)}
+.remove-btn:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
 
 /* EXPANDABLE RATING PANEL */
 .player-body{display:none;padding:4px 12px 12px;border-top:1px solid var(--border)}
 .player-item.open .player-body{display:block}
-.stars{display:flex;gap:1px}
-.star{font-size:20px;cursor:pointer;color:var(--border);line-height:1;transition:color .1s}
+.stars{display:flex;gap:0}
+.star{font-size:20px;cursor:pointer;color:var(--border);line-height:1;transition:color .1s;padding:6px;min-width:36px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;border:none;background:none;font-family:inherit}
 .star.lit{color:var(--gold)}
-.attr-grid{display:grid;grid-template-columns:110px 1fr;gap:8px 10px;margin-top:8px}
-.attr-label{color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;align-self:center}
+.star:focus-visible{outline:2px solid var(--green);outline-offset:-2px;border-radius:4px}
+.attr-grid{display:grid;grid-template-columns:minmax(80px,110px) 1fr;gap:8px 10px;margin-top:8px}
+.attr-label{color:var(--muted);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;align-self:center}
 
 /* ROOM BAR */
 .roombar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:12px}
-.roombar-top{display:flex;align-items:center;gap:10px}
-.roompill{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.5px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid var(--border)}
-.roommeta{color:var(--muted);font-size:12px}
+.roombar-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.roompill{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.5px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid var(--border);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.roommeta{color:var(--muted);font-size:13px}
 .roombar-actions{margin-left:auto;display:flex;gap:6px}
 .groups-panel{border-top:1px solid var(--border);margin-top:10px;padding-top:10px;display:none}
 .groups-panel.open{display:block}
-.group-list-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;font-size:14px}
-.group-list-item:hover{background:rgba(255,255,255,.04)}
+.group-list-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;font-size:14px;border:none;background:none;color:var(--text);width:100%;text-align:left;font-family:'Barlow',sans-serif}
+.group-list-item:hover,.group-list-item:focus-visible{background:rgba(255,255,255,.04)}
+.group-list-item:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
 .group-list-item.active{background:var(--green-dim);color:var(--green);font-weight:600}
 .group-list-item .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0}
 .group-list-item.active .dot{background:var(--green)}
-.group-list-item .del-group{margin-left:auto;color:var(--muted);background:none;border:none;cursor:pointer;font-size:14px;padding:0 4px;display:none}
-.group-list-item:hover .del-group{display:block}
+.group-list-item .del-group{margin-left:auto;color:var(--muted);background:none;border:none;cursor:pointer;font-size:14px;padding:8px;min-width:36px;min-height:36px;display:inline-flex;align-items:center;justify-content:center}
 .group-list-item.active .del-group{display:none}
 .new-group-row{display:flex;gap:6px;margin-top:8px}
 
@@ -100,15 +106,17 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
 .team-cfg:last-child{border-bottom:none}
 .team-cfg-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
 .color-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
-.swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .1s}
-.swatch.sel{border-color:white;transform:scale(1.2)}
+.swatch{width:40px;height:40px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .1s}
+.swatch.sel{border-color:white;transform:scale(1.15)}
+.swatch:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .num-row{display:flex;align-items:center;gap:16px;margin-bottom:14px}
 .num-ctrl{display:flex;align-items:center;gap:12px}
-.num-btn{width:34px;height:34px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Barlow',sans-serif}
+.num-btn{width:44px;height:44px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Barlow',sans-serif}
+.num-btn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .num-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;min-width:20px;text-align:center}
 .excl-row{display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px}
 .excl-row:last-child{border-bottom:none}
-.excl-vs{color:var(--muted);font-size:11px}
+.excl-vs{color:var(--muted);font-size:13px}
 .toggle-row{display:flex;align-items:center;gap:10px;font-size:14px}
 .toggle{position:relative;width:44px;height:24px;cursor:pointer}
 .toggle input{opacity:0;width:0;height:0}
@@ -135,9 +143,10 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
 
 /* HISTORY */
 .hist-item{padding:12px;background:var(--surface2);border-radius:8px;margin-bottom:8px;border:1px solid var(--border)}
-.hist-date{font-size:11px;color:var(--muted);margin-bottom:6px}
-.hist-teams{display:flex;gap:8px;flex-wrap:wrap}
-.hist-team{display:flex;align-items:center;gap:6px;font-size:13px}
+.hist-date{font-size:13px;color:var(--muted);margin-bottom:6px}
+.hist-teams{display:flex;gap:8px;flex-wrap:wrap;flex-direction:column}
+.hist-team{display:flex;align-items:center;gap:6px;font-size:13px;max-width:100%}
+.hist-team-names{color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
 .hist-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .hist-empty{color:var(--muted);font-size:14px;text-align:center;padding:30px 0}
 
@@ -157,17 +166,17 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
   <button class="share-btn" onclick="shareState()">Partilhar 🔗</button>
 </div>
 
-<div class="tabs">
-  <button class="tab active" onclick="showTab('players',this)">Jogadores</button>
-  <button class="tab" onclick="showTab('setup',this)">Equipas</button>
-  <button class="tab" onclick="showTab('result',this)">Sorteio</button>
-  <button class="tab" onclick="showTab('history',this)">Histórico</button>
+<div class="tabs" role="tablist" aria-label="Navegação principal">
+  <button class="tab active" role="tab" aria-selected="true" aria-controls="tab-players" id="tab-btn-players" onclick="showTab('players',this)">Jogadores</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="tab-setup" id="tab-btn-setup" onclick="showTab('setup',this)">Equipas</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="tab-result" id="tab-btn-result" onclick="showTab('result',this)">Sorteio</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="tab-history" id="tab-btn-history" onclick="showTab('history',this)">Histórico</button>
 </div>
 
 <div class="container">
 
 <!-- JOGADORES -->
-<div id="tab-players" class="section active">
+<div id="tab-players" class="section active" role="tabpanel" aria-labelledby="tab-btn-players">
   <div class="roombar">
     <div class="roombar-top">
       <span style="color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase">Sala</span>
@@ -188,20 +197,20 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
   </div>
   <div class="add-row">
     <input type="text" id="inp-player" placeholder="Nome do jogador..." onkeydown="if(event.key==='Enter')addPlayer()">
-    <button class="btn btn-green" onclick="addPlayer()">+</button>
+    <button class="btn btn-green" onclick="addPlayer()" aria-label="Adicionar jogador">+</button>
   </div>
   <div id="player-list"><div class="empty">Adiciona os teus jogadores.</div></div>
   <div style="text-align:center;font-size:12px;color:var(--muted)" id="player-count"></div>
 </div>
 
 <!-- SETUP -->
-<div id="tab-setup" class="section">
+<div id="tab-setup" class="section" role="tabpanel" aria-labelledby="tab-btn-setup">
   <div class="card">
     <div class="card-title">Número de equipas</div>
     <div class="num-ctrl">
-      <button class="num-btn" onclick="changeN(-1)">−</button>
+      <button class="num-btn" onclick="changeN(-1)" aria-label="Reduzir número de equipas">−</button>
       <span class="num-val" id="n-display">2</span>
-      <button class="num-btn" onclick="changeN(1)">+</button>
+      <button class="num-btn" onclick="changeN(1)" aria-label="Aumentar número de equipas">+</button>
       <span style="font-size:13px;color:var(--muted)">equipas</span>
     </div>
   </div>
@@ -221,7 +230,7 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
   </div>
   <div class="card">
     <div class="toggle-row">
-      <label class="toggle"><input type="checkbox" id="balance" checked><span class="slider"></span></label>
+      <label class="toggle"><input type="checkbox" id="balance" checked role="switch" aria-label="Equilibrar por rating"><span class="slider" aria-hidden="true"></span></label>
       <span>Equilibrar por rating</span>
     </div>
   </div>
@@ -229,13 +238,13 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
 </div>
 
 <!-- SORTEIO -->
-<div id="tab-result" class="section">
-  <div id="result-area"><div class="empty">Ainda não fizeste nenhum sorteio.</div></div>
+<div id="tab-result" class="section" role="tabpanel" aria-labelledby="tab-btn-result">
+  <div id="result-area" tabindex="-1" aria-label="Resultado do sorteio"><div class="empty">Ainda não fizeste nenhum sorteio.</div></div>
   <button class="redo-btn" id="redo-btn" style="display:none" onclick="makeTeams()">↺ NOVO SORTEIO</button>
 </div>
 
 <!-- HISTÓRICO -->
-<div id="tab-history" class="section">
+<div id="tab-history" class="section" role="tabpanel" aria-labelledby="tab-btn-history">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
     <span style="font-size:14px;color:var(--muted)" id="hist-count"></span>
     <button class="btn btn-sm btn-ghost" onclick="clearHistory()" style="color:var(--red)">Limpar</button>
@@ -245,7 +254,7 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
 
 </div><!-- /container -->
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <script>
 const TEAM_COLORS=[
@@ -301,6 +310,7 @@ let S={
 let ROOM = 'ligadoscoxos';
 const API_BASE = '/api/room/';
 let lastRemoteRev = 0;
+let remoteLoaded = false;
 let saveTimer = null;
 
 function parseRoomFromPath(){
@@ -332,6 +342,7 @@ async function loadRoomState(){
       lastRemoteRev = payload?.rev || 0;
       if(payload && payload.state){
         S = Object.assign(S, payload.state);
+        remoteLoaded = true;
       }
       if(status) status.textContent = 'sincronizado';
       return;
@@ -402,7 +413,7 @@ function copyRoomLink(){
 }
 
 function loadState(){
-  // try URL first (shared link)
+  // URL hash (shared link) always wins — it's an explicit share action
   const hash=location.hash.slice(1);
   if(hash){
     try{
@@ -410,11 +421,14 @@ function loadState(){
       if(decoded&&decoded.players) S=Object.assign(S,decoded);
       history.replaceState(null,'',location.pathname);
     }catch(e){}
+    return;
   }
-  // then localStorage
-  const saved=localStorage.getItem('tm2_state:'+ROOM);
-  if(saved&&!hash){
-    try{S=Object.assign(S,JSON.parse(saved));}catch(e){}
+  // Only fall back to localStorage if remote didn't load
+  if(!remoteLoaded){
+    const saved=localStorage.getItem('tm2_state:'+ROOM);
+    if(saved){
+      try{S=Object.assign(S,JSON.parse(saved));}catch(e){}
+    }
   }
 }
 
@@ -450,9 +464,10 @@ function toast(msg,duration=2800){
 
 function showTab(id,el){
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false')});
   document.getElementById('tab-'+id).classList.add('active');
   el.classList.add('active');
+  el.setAttribute('aria-selected','true');
   if(id==='setup')renderSetup();
   if(id==='history')renderHistory();
 }
@@ -480,6 +495,8 @@ function removePlayer(id){
   save();renderPlayers();
 }
 
+let expandedPlayerId=null;
+
 function miniStars(val){
   const full=Math.round(val);
   let s='';
@@ -487,8 +504,14 @@ function miniStars(val){
   return s;
 }
 
-function togglePlayer(el){
-  el.closest('.player-item').classList.toggle('open');
+function togglePlayer(id){
+  expandedPlayerId=expandedPlayerId===id?null:id;
+  renderPlayers();
+}
+
+function starKey(e,id,key,val){
+  if(e.key==='ArrowRight'||e.key==='ArrowUp'){e.preventDefault();setAttr(id,key,Math.min(5,val+1));}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowDown'){e.preventDefault();setAttr(id,key,Math.max(1,val-1));}
 }
 
 function renderPlayers(){
@@ -497,22 +520,23 @@ function renderPlayers(){
   el.innerHTML=S.players.map(p=>{
     const a=p.attrs||defaultAttrs();
     const ov=overall(p);
+    const isOpen=p.id===expandedPlayerId;
     return `
-    <div class="player-item">
-      <div class="player-header" onclick="togglePlayer(this)">
+    <div class="player-item ${isOpen?'open':''}">
+      <div class="player-header" role="button" tabindex="0" aria-expanded="${isOpen}" onclick="togglePlayer(${p.id})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePlayer(${p.id})}">
         <div class="avatar" style="background:${aColor(p.name)};color:#fff">${inits(p.name)}</div>
         <span class="player-name-text">${esc(p.name)}</span>
         <span class="player-avg">${ov.toFixed(1)}</span>
-        <span class="mini-stars">${miniStars(ov)}</span>
-        <span class="player-chev">▾</span>
-        <button class="remove-btn" onclick="event.stopPropagation();removePlayer(${p.id})">✕</button>
+        <span class="mini-stars" aria-hidden="true">${miniStars(ov)}</span>
+        <span class="player-chev" aria-hidden="true">▾</span>
+        <button class="remove-btn" aria-label="Remover ${esc(p.name)}" onclick="event.stopPropagation();removePlayer(${p.id})">✕</button>
       </div>
       <div class="player-body">
         <div class="attr-grid">
           ${ATTRS.map(attr=>`
-            <div class="attr-label">${attr.label}</div>
-            <div class="stars">
-              ${[1,2,3,4,5].map(s=>`<span class="star ${(a[attr.key]??3)>=s?'lit':''}" onclick="setAttr(${p.id},'${attr.key}',${s})">★</span>`).join('')}
+            <div class="attr-label" id="attr-${p.id}-${attr.key}">${attr.label}</div>
+            <div class="stars" role="radiogroup" aria-labelledby="attr-${p.id}-${attr.key}">
+              ${[1,2,3,4,5].map(s=>`<button type="button" class="star ${(a[attr.key]??3)>=s?'lit':''}" role="radio" aria-checked="${(a[attr.key]??3)===s}" aria-label="${s} de 5" tabindex="${(a[attr.key]??3)===s?'0':'-1'}" onclick="setAttr(${p.id},'${attr.key}',${s})" onkeydown="starKey(event,${p.id},'${attr.key}',${s})">★</button>`).join('')}
             </div>
           `).join('')}
         </div>
@@ -537,8 +561,8 @@ function renderSetup(){
   for(let i=0;i<S.numTeams;i++){
     const d=document.createElement('div');d.className='team-cfg';
     d.innerHTML=`<div class="team-cfg-label">Equipa ${i+1}</div>
-      <input type="text" value="${esc(S.teamNames[i]||'Equipa '+(i+1))}" oninput="S.teamNames[${i}]=this.value;save()" placeholder="Nome...">
-      <div class="color-row">${TEAM_COLORS.map(c=>`<div class="swatch ${S.teamColors[i]===c?'sel':''}" style="background:${c}" onclick="setColor(${i},'${c}',this)"></div>`).join('')}</div>`;
+      <input type="text" value="${esc(S.teamNames[i]||'Equipa '+(i+1))}" oninput="S.teamNames[${i}]=this.value;save()" placeholder="Nome..." aria-label="Nome da equipa ${i+1}">
+      <div class="color-row" role="radiogroup" aria-label="Cor da equipa ${i+1}">${TEAM_COLORS.map(c=>`<div class="swatch ${S.teamColors[i]===c?'sel':''}" style="background:${c}" role="radio" tabindex="${S.teamColors[i]===c?'0':'-1'}" aria-checked="${S.teamColors[i]===c}" aria-label="${colorName(c)}" onclick="setColor(${i},'${c}',this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setColor(${i},'${c}',this)}"></div>`).join('')}</div>`;
     cfgs.appendChild(d);
   }
   // excl selects
@@ -568,7 +592,7 @@ function renderExclList(){
   el.innerHTML=S.exclusions.map((e,i)=>{
     const a=S.players.find(p=>p.id===e[0]);const b=S.players.find(p=>p.id===e[1]);
     if(!a||!b)return'';
-    return`<div class="excl-row"><span>${esc(a.name)}</span><span class="excl-vs">≠</span><span>${esc(b.name)}</span><button class="btn btn-sm btn-red" style="margin-left:auto;padding:2px 8px" onclick="S.exclusions.splice(${i},1);save();renderExclList()">✕</button></div>`;
+    return`<div class="excl-row"><span>${esc(a.name)}</span><span class="excl-vs">≠</span><span>${esc(b.name)}</span><button class="btn btn-sm btn-red" style="margin-left:auto;padding:8px 12px" aria-label="Remover exclusão ${esc(a.name)} e ${esc(b.name)}" onclick="S.exclusions.splice(${i},1);save();renderExclList()">✕</button></div>`;
   }).join('');
 }
 
@@ -634,11 +658,14 @@ function checkExcl(teams){
 
 function showResultTab(teams){
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-selected','false')});
   document.getElementById('tab-result').classList.add('active');
-  document.querySelectorAll('.tab')[2].classList.add('active');
+  const resultTab=document.querySelectorAll('.tab')[2];
+  resultTab.classList.add('active');
+  resultTab.setAttribute('aria-selected','true');
   renderResult(teams);
   document.getElementById('redo-btn').style.display='block';
+  document.getElementById('result-area').focus();
 }
 
 function renderResult(teams){
@@ -672,7 +699,7 @@ function renderHistory(){
       <div class="hist-teams">${rec.teams.map(t=>`<div class="hist-team">
         <div class="hist-dot" style="background:${t.color}"></div>
         <span style="font-weight:600">${esc(t.name)}</span>
-        <span style="color:var(--muted);font-size:12px">${t.players.map(p=>esc(p.name)).join(', ')}</span>
+        <span class="hist-team-names">${t.players.map(p=>esc(p.name)).join(', ')}</span>
       </div>`).join('')}</div>
     </div>`).join('');
 }
@@ -689,6 +716,8 @@ function aColor(name){
 }
 function inits(name){return name.split(' ').map(w=>w[0]||'').slice(0,2).join('').toUpperCase();}
 function esc(s){if(!s)return'';return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+const COLOR_NAMES={'#e53935':'Vermelho','#1e88e5':'Azul','#43a047':'Verde','#fb8c00':'Laranja','#8e24aa':'Roxo','#fdd835':'Amarelo','#00acc1':'Ciano','#e91e63':'Rosa','#26c6da':'Azul claro','#ef6c00':'Laranja escuro'};
+function colorName(hex){return COLOR_NAMES[hex]||hex;}
 
 // ---- GROUPS ----
 function getMyGroups(){
@@ -711,10 +740,10 @@ function renderGroupList(){
   const el=document.getElementById('group-list');
   if(!groups.length){el.innerHTML='<div style="font-size:13px;color:var(--muted);padding:4px 0">Nenhum grupo.</div>';return;}
   el.innerHTML=groups.map(g=>`
-    <div class="group-list-item ${g===ROOM?'active':''}" onclick="switchGroup('${esc(g)}')">
+    <div class="group-list-item ${g===ROOM?'active':''}" role="button" tabindex="0" onclick="switchGroup('${esc(g)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchGroup('${esc(g)}')}">
       <span class="dot"></span>
       <span>${esc(g)}</span>
-      ${g!==ROOM?`<button class="del-group" onclick="event.stopPropagation();removeGroup('${esc(g)}')">✕</button>`:''}
+      ${g!==ROOM?`<button class="del-group" aria-label="Remover grupo ${esc(g)}" onclick="event.stopPropagation();removeGroup('${esc(g)}')">✕</button>`:''}
     </div>`).join('');
 }
 
@@ -742,6 +771,7 @@ async function switchGroup(name){
   // Reset state
   S={players:[],exclusions:[],numTeams:2,teamNames:['Equipa A','Equipa B'],teamColors:['#e53935','#1e88e5'],history:[]};
   lastRemoteRev=0;
+  remoteLoaded=false;
   ROOM=setRoomInPath(name);
   await loadRoomState();
   loadState();
