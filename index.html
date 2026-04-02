@@ -13,6 +13,7 @@
   --gold:#d29922;--red:#f85149;--blue:#58a6ff;--radius:10px
 }
 body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;padding-bottom:80px}
+.container{max-width:540px;margin:0 auto}
 
 /* HEADER */
 .header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50}
@@ -53,30 +54,46 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
 .add-row input{flex:1}
 
 /* PLAYER ITEM */
-.player-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
-.player-item:last-child{border-bottom:none}
-.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;flex-shrink:0}
+.player-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;overflow:hidden}
+.player-item:last-child{margin-bottom:0}
+.player-header{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;user-select:none}
+.player-header:hover{background:rgba(255,255,255,.03)}
+.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;flex-shrink:0}
 .player-name-text{flex:1;font-size:15px;font-weight:500}
-.stars{display:flex;gap:1px}
-.star{font-size:20px;cursor:pointer;color:var(--border);line-height:1;transition:color .1s}
-.star.lit{color:var(--gold)}
-.remove-btn{color:var(--muted);font-size:18px;background:none;border:none;cursor:pointer;padding:2px 6px}
+.player-avg{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:600;color:var(--gold);white-space:nowrap}
+.mini-stars{color:var(--gold);font-size:13px;letter-spacing:-1px}
+.mini-stars .empty{color:var(--border)}
+.player-chev{color:var(--muted);font-size:11px;transition:transform .15s;margin-left:2px}
+.player-item.open .player-chev{transform:rotate(180deg)}
+.remove-btn{color:var(--muted);font-size:16px;background:none;border:none;cursor:pointer;padding:2px 6px}
 .remove-btn:active{color:var(--red)}
 
 /* EXPANDABLE RATING PANEL */
-.details{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px}
-.details summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px}
-.details summary::-webkit-details-marker{display:none}
-.details .chev{margin-left:auto;color:var(--muted);font-size:12px;transition:transform .15s}
-.details[open] .chev{transform:rotate(180deg)}
-.attr-grid{display:grid;grid-template-columns:120px 1fr;gap:8px 10px;margin-top:10px}
+.player-body{display:none;padding:4px 12px 12px;border-top:1px solid var(--border)}
+.player-item.open .player-body{display:block}
+.stars{display:flex;gap:1px}
+.star{font-size:20px;cursor:pointer;color:var(--border);line-height:1;transition:color .1s}
+.star.lit{color:var(--gold)}
+.attr-grid{display:grid;grid-template-columns:110px 1fr;gap:8px 10px;margin-top:8px}
 .attr-label{color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;align-self:center}
 
 /* ROOM BAR */
-.roombar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.roombar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:12px}
+.roombar-top{display:flex;align-items:center;gap:10px}
 .roompill{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.5px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid var(--border)}
 .roommeta{color:var(--muted);font-size:12px}
-.roombar .btn{margin-left:auto}
+.roombar-actions{margin-left:auto;display:flex;gap:6px}
+.groups-panel{border-top:1px solid var(--border);margin-top:10px;padding-top:10px;display:none}
+.groups-panel.open{display:block}
+.group-list-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;font-size:14px}
+.group-list-item:hover{background:rgba(255,255,255,.04)}
+.group-list-item.active{background:var(--green-dim);color:var(--green);font-weight:600}
+.group-list-item .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0}
+.group-list-item.active .dot{background:var(--green)}
+.group-list-item .del-group{margin-left:auto;color:var(--muted);background:none;border:none;cursor:pointer;font-size:14px;padding:0 4px;display:none}
+.group-list-item:hover .del-group{display:block}
+.group-list-item.active .del-group{display:none}
+.new-group-row{display:flex;gap:6px;margin-top:8px}
 
 /* SETUP */
 .team-cfg{padding:12px 0;border-bottom:1px solid var(--border)}
@@ -147,21 +164,33 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
   <button class="tab" onclick="showTab('history',this)">Histórico</button>
 </div>
 
+<div class="container">
+
 <!-- JOGADORES -->
 <div id="tab-players" class="section active">
   <div class="roombar">
-    <span style="color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase">Sala</span>
-    <span class="roompill" id="room-pill">ligadoscoxos</span>
-    <span class="roommeta" id="room-status">a ligar…</span>
-    <button class="btn btn-sm" onclick="copyRoomLink()">Copiar link</button>
+    <div class="roombar-top">
+      <span style="color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase">Sala</span>
+      <span class="roompill" id="room-pill">ligadoscoxos</span>
+      <span class="roommeta" id="room-status">a ligar…</span>
+      <div class="roombar-actions">
+        <button class="btn btn-sm" onclick="copyRoomLink()">Copiar link</button>
+        <button class="btn btn-sm" onclick="toggleGroupsPanel()">Grupos</button>
+      </div>
+    </div>
+    <div class="groups-panel" id="groups-panel">
+      <div id="group-list"></div>
+      <div class="new-group-row">
+        <input type="text" id="inp-new-group" placeholder="Nome do novo grupo..." style="flex:1;padding:7px 10px;font-size:13px" onkeydown="if(event.key==='Enter')createGroup()">
+        <button class="btn btn-sm btn-green" onclick="createGroup()">+ Novo grupo</button>
+      </div>
+    </div>
   </div>
   <div class="add-row">
     <input type="text" id="inp-player" placeholder="Nome do jogador..." onkeydown="if(event.key==='Enter')addPlayer()">
     <button class="btn btn-green" onclick="addPlayer()">+</button>
   </div>
-  <div class="card">
-    <div id="player-list"><div class="empty">Adiciona os teus jogadores.</div></div>
-  </div>
+  <div id="player-list"><div class="empty">Adiciona os teus jogadores.</div></div>
   <div style="text-align:center;font-size:12px;color:var(--muted)" id="player-count"></div>
 </div>
 
@@ -213,6 +242,8 @@ select{background:var(--surface2);border:1px solid var(--border);color:var(--tex
   </div>
   <div id="hist-list"><div class="hist-empty">Ainda sem histórico de sorteios.</div></div>
 </div>
+
+</div><!-- /container -->
 
 <div class="toast" id="toast"></div>
 
@@ -449,6 +480,17 @@ function removePlayer(id){
   save();renderPlayers();
 }
 
+function miniStars(val){
+  const full=Math.round(val);
+  let s='';
+  for(let i=1;i<=5;i++) s+=i<=full?'★':'<span class="empty">★</span>';
+  return s;
+}
+
+function togglePlayer(el){
+  el.closest('.player-item').classList.toggle('open');
+}
+
 function renderPlayers(){
   const el=document.getElementById('player-list');
   if(!S.players.length){el.innerHTML='<div class="empty">Adiciona os teus jogadores.</div>';document.getElementById('player-count').textContent='';return;}
@@ -456,19 +498,16 @@ function renderPlayers(){
     const a=p.attrs||defaultAttrs();
     const ov=overall(p);
     return `
-    <div class="player-item" style="flex-direction:column;align-items:stretch;gap:10px">
-      <div style="display:flex;align-items:center;gap:10px">
+    <div class="player-item">
+      <div class="player-header" onclick="togglePlayer(this)">
         <div class="avatar" style="background:${aColor(p.name)};color:#fff">${inits(p.name)}</div>
         <span class="player-name-text">${esc(p.name)}</span>
-        <span style="color:var(--muted);font-size:12px;margin-left:auto">média ${ov.toFixed(1)}</span>
-        <button class="remove-btn" onclick="removePlayer(${p.id})">✕</button>
+        <span class="player-avg">${ov.toFixed(1)}</span>
+        <span class="mini-stars">${miniStars(ov)}</span>
+        <span class="player-chev">▾</span>
+        <button class="remove-btn" onclick="event.stopPropagation();removePlayer(${p.id})">✕</button>
       </div>
-      <details class="details">
-        <summary>
-          <span style="color:var(--text);font-weight:600">Ratings</span>
-          <span style="color:var(--muted);font-size:12px">tocar para expandir</span>
-          <span class="chev">▾</span>
-        </summary>
+      <div class="player-body">
         <div class="attr-grid">
           ${ATTRS.map(attr=>`
             <div class="attr-label">${attr.label}</div>
@@ -477,7 +516,7 @@ function renderPlayers(){
             </div>
           `).join('')}
         </div>
-      </details>
+      </div>
     </div>`;
   }).join('');
   document.getElementById('player-count').textContent=`${S.players.length} jogadores registados`;
@@ -651,10 +690,72 @@ function aColor(name){
 function inits(name){return name.split(' ').map(w=>w[0]||'').slice(0,2).join('').toUpperCase();}
 function esc(s){if(!s)return'';return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
+// ---- GROUPS ----
+function getMyGroups(){
+  try{return JSON.parse(localStorage.getItem('tm2_groups')||'[]');}catch(e){return[];}
+}
+function saveMyGroups(groups){
+  localStorage.setItem('tm2_groups',JSON.stringify(groups));
+}
+
+function toggleGroupsPanel(){
+  const panel=document.getElementById('groups-panel');
+  panel.classList.toggle('open');
+  if(panel.classList.contains('open'))renderGroupList();
+}
+
+function renderGroupList(){
+  const groups=getMyGroups();
+  // Ensure current room is in the list
+  if(!groups.includes(ROOM)){groups.push(ROOM);saveMyGroups(groups);}
+  const el=document.getElementById('group-list');
+  if(!groups.length){el.innerHTML='<div style="font-size:13px;color:var(--muted);padding:4px 0">Nenhum grupo.</div>';return;}
+  el.innerHTML=groups.map(g=>`
+    <div class="group-list-item ${g===ROOM?'active':''}" onclick="switchGroup('${esc(g)}')">
+      <span class="dot"></span>
+      <span>${esc(g)}</span>
+      ${g!==ROOM?`<button class="del-group" onclick="event.stopPropagation();removeGroup('${esc(g)}')">✕</button>`:''}
+    </div>`).join('');
+}
+
+function createGroup(){
+  const inp=document.getElementById('inp-new-group');
+  const raw=inp.value.trim().toLowerCase().replace(/[^a-z0-9_-]/g,'');
+  if(!raw){toast('Escolhe um nome válido.');return;}
+  const groups=getMyGroups();
+  if(!groups.includes(raw))groups.push(raw);
+  saveMyGroups(groups);
+  inp.value='';
+  switchGroup(raw);
+}
+
+function removeGroup(name){
+  let groups=getMyGroups().filter(g=>g!==name);
+  saveMyGroups(groups);
+  localStorage.removeItem('tm2_state:'+name);
+  renderGroupList();
+}
+
+async function switchGroup(name){
+  // Save current state first
+  save();
+  // Reset state
+  S={players:[],exclusions:[],numTeams:2,teamNames:['Equipa A','Equipa B'],teamColors:['#e53935','#1e88e5'],history:[]};
+  lastRemoteRev=0;
+  ROOM=setRoomInPath(name);
+  await loadRoomState();
+  loadState();
+  renderPlayers();
+  document.getElementById('groups-panel').classList.remove('open');
+}
+
 // INIT
 async function init(){
   await loadRoomState();
   loadState();
+  // Register current room in groups list
+  const groups=getMyGroups();
+  if(!groups.includes(ROOM)){groups.push(ROOM);saveMyGroups(groups);}
   renderPlayers();
 }
 init();
