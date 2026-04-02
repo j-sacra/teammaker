@@ -297,12 +297,13 @@ async function loadRoomState(){
     const res = await fetch(API_BASE + encodeURIComponent(ROOM), { method:'GET' });
     if(res.ok){
       const payload = await res.json();
+      // API reachable => server mode (even if room is empty).
+      lastRemoteRev = payload?.rev || 0;
       if(payload && payload.state){
         S = Object.assign(S, payload.state);
-        lastRemoteRev = payload.rev || 0;
-        if(status) status.textContent = 'sincronizado';
-        return;
       }
+      if(status) status.textContent = 'sincronizado';
+      return;
     }
     // No backend yet -> local only
     if(status) status.textContent = 'local (sem servidor)';
