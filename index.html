@@ -420,7 +420,7 @@ function updateIdentityPill(){
 function showSignInModal(){
   if(!S.players.length){toast('Adiciona jogadores primeiro.');return;}
   const list=document.getElementById('signin-list');
-  list.innerHTML=S.players.map(p=>`
+  list.innerHTML=sortedPlayers().map(p=>`
     <button class="signin-item" onclick="setMe(${p.id})">
       ${esc(p.name)}
     </button>
@@ -675,7 +675,7 @@ function readOnlyStars(val){
 function renderPlayers(){
   const el=document.getElementById('player-list');
   if(!S.players.length){el.innerHTML='<div class="empty">Adiciona os teus jogadores.</div>';document.getElementById('player-count').textContent='';return;}
-  el.innerHTML=S.players.map(p=>{
+  el.innerHTML=sortedPlayers().map(p=>{
     const avgAttrs=getPlayerAttrs(p);
     const ov=overall(p);
     const rc=getRatingCount(p);
@@ -773,7 +773,7 @@ function renderSetup(){
   // Convocados
   renderConvocados();
   // Exclusion dropdowns
-  const opts=S.players.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+  const opts=sortedPlayers().map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
   document.getElementById('e1').innerHTML=opts||'<option>—</option>';
   document.getElementById('e2').innerHTML=opts||'<option>—</option>';
   renderExclList();
@@ -793,7 +793,7 @@ function renderConvocados(){
     return;
   }
 
-  list.innerHTML=S.players.map(p=>{
+  list.innerHTML=sortedPlayers().map(p=>{
     const sel=S.selectedIds.includes(p.id);
     const ov=overall(p);
     const assign=S.assignments[p.id]||'auto';
@@ -1124,6 +1124,7 @@ function clearHistory(){
 
 // ---- UTILS ----
 function esc(s){if(!s)return'';return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function sortedPlayers(){return[...S.players].sort((a,b)=>a.name.localeCompare(b.name,'pt'));}
 
 // ---- GROUPS ----
 function getMyGroups(){
