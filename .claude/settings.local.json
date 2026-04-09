@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -E \"\\\\.\\(toml|js|ts|json|yaml|yml|md\\)$\")"
+      "Bash(grep -E \"\\\\.\\(toml|js|ts|json|yaml|yml|md\\)$\")",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(node:*)"
     ]
   }
 }
