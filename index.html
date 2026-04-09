@@ -602,6 +602,7 @@ function addPlayer(){
 }
 
 function removePlayer(id){
+  if(!isSacra()){toast('Apenas o Sacra pode remover jogadores.');return;}
   S.players=S.players.filter(x=>x.id!==id);
   S.exclusions=S.exclusions.filter(e=>e[0]!==id&&e[1]!==id);
   S.selectedIds=(S.selectedIds||[]).filter(x=>x!==id);
@@ -906,7 +907,7 @@ function saveDrawToHistory(){
   S.history.unshift(record);
   if(S.history.length>50)S.history=S.history.slice(0,50);
   lastDraw=null;
-  save();
+  save();saveRoomStateRemote();
   const saveBtn=document.getElementById('save-btn');
   saveBtn.disabled=true;
   saveBtn.textContent='Guardado!';
@@ -1019,9 +1020,10 @@ function updatePlayerStat(histIdx,teamIdx,playerIdx,stat,delta){
 }
 
 function deleteHistoryItem(idx){
+  if(!isSacra()){toast('Apenas o Sacra pode apagar sorteios.');return;}
   S.history.splice(idx,1);
   expandedHistoryIdx=null;
-  save();renderHistory();
+  save();saveRoomStateRemote();renderHistory();
 }
 
 function renderMatchDetail(rec,ri){
@@ -1108,9 +1110,16 @@ function renderHistory(){
   }).join('');
 }
 
+function isSacra(){
+  if(!ME) return false;
+  const p=S.players.find(x=>x.id===ME);
+  return p&&p.name.toLowerCase().includes('sacra');
+}
+
 function clearHistory(){
+  if(!isSacra()){toast('Apenas o Sacra pode apagar o histórico.');return;}
   if(!confirm('Apagar todo o histórico?'))return;
-  S.history=[];expandedHistoryIdx=null;save();renderHistory();
+  S.history=[];expandedHistoryIdx=null;save();saveRoomStateRemote();renderHistory();
 }
 
 // ---- UTILS ----
